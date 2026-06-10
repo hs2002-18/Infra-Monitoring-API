@@ -1,6 +1,8 @@
 from flask import Flask
 from database.db import db
 from routes.health import server_bp
+from routes.metric_routes import metrics_bp
+
 
 app = Flask(__name__)
 
@@ -13,6 +15,7 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(server_bp)
+app.register_blueprint(metrics_bp)
 
 @app.route('/')
 def home():
