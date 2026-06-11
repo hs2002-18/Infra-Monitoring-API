@@ -2,6 +2,7 @@ from flask import Flask
 from database.db import db
 from routes.health import server_bp
 from routes.metric_routes import metrics_bp
+from routes.alert_routes import alerts_bp
 
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ with app.app_context():
 
 app.register_blueprint(server_bp)
 app.register_blueprint(metrics_bp)
+app.register_blueprint(alerts_bp)
 
 @app.route('/')
 def home():
