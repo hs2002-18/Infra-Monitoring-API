@@ -6,12 +6,7 @@ def get_alerts():
 
     alerts = []
 
-    if not alerts:
-        return{
-            "messages": "No alerts found"
-        }
-
-    if metrics["cpu_usage"] > 80:
+    if metrics["cpu_percent"] > 80:
         alerts.append({
             "severity": "warning",
             "message": "CPU usage is high"
@@ -21,10 +16,15 @@ def get_alerts():
             "severity": "warning",
             "message": "Memory usage is high"
         })
-    if metrics["disk_usage"] > 70:
+    if metrics["disk_percent"] > 70:
         alerts.append({
             "severity": "warning",
             "message": "Disk usage is high"
         })
+    
+    if not alerts:
+        return{
+            "messages": "No alerts found"
+        }
 
     return alerts
