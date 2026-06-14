@@ -1,104 +1,196 @@
-# Infrastructure Health Monitoring API
+# Infrastructure Monitoring API
 
-A beginner-friendly infrastructure monitoring API project built using Flask.
+A lightweight Infrastructure Monitoring API built using Flask, Docker, Prometheus, and Grafana.
 
-This project is being developed slowly as part of my learning journey in:
-- REST APIs
-- Backend Development
-- DevOps
-- Observability
-- SRE concepts
+This project was created to learn and understand core observability and monitoring concepts commonly used in SRE, DevOps, and Cloud Engineering roles.
 
-## Project Status
+## Features
 
-🚧 Work in Progress
+* Health Check Endpoint
+* System Metrics Collection
 
-This project is intentionally being built step-by-step to understand the underlying concepts rather than rapidly assembling features.
+  * CPU Usage
+  * Memory Usage
+  * Disk Usage
+  * System Uptime
+* Alert Generation
+* Docker Containerization
+* Docker Compose Orchestration
+* Prometheus Metrics Export
+* Prometheus Monitoring Integration
+* Grafana Deployment Support
 
-## Current Features
+## Project Structure
 
-### API Endpoints
+```text
+api-infra-monitor/
+│
+├── routes/
+│   ├── health.py
+│   ├── metrics.py
+│   └── alert_routes.py
+│
+├── services/
+│   ├── metrics.py
+│   └── alerts.py
+│
+├── prometheus/
+│   └── prometheus.yml
+│
+├── instance/
+│   └── monitor.db
+│
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── .dockerignore
+├── .gitignore
+└── app.py
+```
 
-| Method | Endpoint         | Description                 |
-| ------ | ---------------- | --------------------------- |
-| GET    | /                | API Welcome Message         |
-| GET    | /health          | Health Check Endpoint       |
-| GET    | /servers         | Retrieve Registered Servers |
-| POST   | /register-server | Register a New Server       |
+## API Endpoints
 
-### Validation & Error Handling
+### Health Check
 
-* Request validation
-* Duplicate server detection
-* Custom 404 error handling
-* Structured JSON responses
+```http
+GET /health
+```
 
-### Database
-
-* SQLite database
-* SQLAlchemy ORM
-* Persistent server inventory
-
-## Sample Server Registration
+Example Response:
 
 ```json
 {
-    "server_name": "web-01",
-    "ip_address": "10.0.0.5"
+  "status": "healthy"
 }
 ```
 
-## Tech Stack
+### System Metrics
+
+```http
+GET /metrics
+```
+
+Example Response:
+
+```json
+{
+  "cpu_percent": 5.6,
+  "memory_percent": 30.3,
+  "disk_percent": 75.6,
+  "uptime_seconds": "0 days, 1 hours, 56 minutes"
+}
+```
+
+### Alerts
+
+```http
+GET /alerts
+```
+
+Example Response:
+
+```json
+[
+  {
+    "severity": "warning",
+    "message": "Disk usage is high"
+  }
+]
+```
+
+### Prometheus Metrics
+
+```http
+GET /prometheus
+```
+
+Used by Prometheus to scrape application metrics.
+
+## Monitoring Dashboard
+<img width="949" height="634" alt="image" src="https://github.com/user-attachments/assets/5ba51f38-7077-4b81-b041-4691c84ea6ca" />
+
+
+## Technologies Used
 
 * Python
 * Flask
-* Flask-SQLAlchemy
 * SQLite
-
-## Project Roadmap
-
-### Phase 1 – API Foundation ✅
-
-* Flask Setup
-* SQLite Integration
-* SQLAlchemy Models
-* Server Registration API
-* Validation & Error Handling
-
-### Phase 2 – System Metrics (Next)
-
-* CPU Usage Monitoring
-* Memory Usage Monitoring
-* Disk Usage Monitoring
-* System Uptime
-
-### Phase 3 – Alerting
-
-* CPU Threshold Alerts
-* Memory Threshold Alerts
-* Disk Usage Alerts
-
-### Phase 4 – Containerization
-
 * Docker
 * Docker Compose
+* Prometheus
+* Grafana
+* psutil
 
-### Phase 5 – Observability
+## Running the Project
 
-* Prometheus Integration
-* Grafana Dashboards
+### Clone Repository
 
-## Learning Objectives
+```bash
+git clone <repository-url>
+cd api-infra-monitor
+```
 
-This project is helping me learn:
+### Start Services
+
+```bash
+docker compose up -d
+```
+
+### Verify Containers
+
+```bash
+docker compose ps
+```
+
+### Access Services
+
+API:
+
+```text
+http://localhost:5000
+```
+
+Prometheus:
+
+```text
+http://localhost:9090
+```
+
+Grafana:
+
+```text
+http://localhost:3000
+```
+
+## Learning Goals
+
+This project was built to gain hands-on experience with:
 
 * REST API Development
-* Database Design
 * Infrastructure Monitoring
 * Observability Concepts
-* DevOps Practices
-* Site Reliability Engineering (SRE)
+* Docker Containerization
+* Metrics Collection
+* Prometheus Monitoring
+* Grafana Visualization
+* SRE and DevOps Practices
 
-## Author
+## Future Enhancements
 
-Harsh Shrimali
+* Multi-server Monitoring
+* Server Registration API
+* Slack/Email Alerting
+* CI/CD Pipeline
+* Kubernetes Deployment
+* Terraform Integration
+* Cloud Deployment (AWS/GCP)
+
+## Project Status
+
+Version: **v1.0**
+
+Core monitoring functionality is complete and operational. Future updates will focus on advanced monitoring, automation, and cloud-native deployment patterns.
+
+---
+
+Built as a learning project for SRE, DevOps, and Cloud Engineering.
